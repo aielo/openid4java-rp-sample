@@ -1,14 +1,15 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>OpenID RP Sample</title>
+		<meta charset="utf-8">
+		<meta name="author" content="Ricardo Aielo">
+		<title>Index - OpenID RP Sample</title>
 	</head>
 	<body>
-		<form method="POST" action="/openid4java-rp-sample/auth">
-			<h2>OpenID Provider</h2>
-			Identifier: <input name="identifier" type="text" />
-			<input type="submit"/>
+		<form action="/openid4java-rp-sample/auth" method="POST">
+			OpenID Provider (OP) id:
+			<input name="id" type="text"/>
+			<input type="submit" />
 		</form>
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 	</body>
 </html>
