@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import openid4java.sample.rp.helper.ConsumerManagerProvider;
+
 import org.openid4java.consumer.ConsumerManager;
 import org.openid4java.discovery.DiscoveryInformation;
 import org.openid4java.message.AuthRequest;
@@ -18,7 +20,7 @@ import org.openid4java.message.AuthRequest;
 public class OpenIDAuthServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -6951091489143426313L;
-	private ConsumerManager cm = new ConsumerManager();
+	private ConsumerManager cm = ConsumerManagerProvider.getConsumerManager();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -31,10 +33,13 @@ public class OpenIDAuthServlet extends HttpServlet {
 		// auth request info
 		Map<Object, Object> ri = new LinkedHashMap<Object, Object>();
 
+		// view info
+		req.setAttribute("info", ri);
+
 		try {
 			// input validation
 			String id = req.getParameter("id");
-			if (id == null){
+			if (id == null || "".equals(id)){
 				throw new RuntimeException("OpenID Provider (OP) id is required");
 			}
 
@@ -59,11 +64,11 @@ public class OpenIDAuthServlet extends HttpServlet {
 			req.getSession().setAttribute("openid4java-rp-sample.request", ri);
 
 		} catch (Throwable t) {
+			// view error
 			req.setAttribute("error", t.getMessage());
 		}
 
 		// show view
-		req.setAttribute("info", ri);
 		req.getRequestDispatcher("WEB-INF/auth.jsp").forward(req, res);
 	}
 }
