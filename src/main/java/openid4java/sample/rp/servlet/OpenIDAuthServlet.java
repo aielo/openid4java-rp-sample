@@ -47,7 +47,7 @@ public class OpenIDAuthServlet extends HttpServlet {
 			DiscoveryInformation di = cm.associate(cm.discover(req.getParameter("id")));
 
 			// auth request
-			AuthRequest ar = cm.authenticate(di, "http://ava.universidade.uol.com.br:8080/openid4java-rp-sample/return");
+			AuthRequest ar = cm.authenticate(di, req.getRequestURL().toString().replaceFirst("/auth", "/return"));
 			String ru = ar.getDestinationUrl(true);
 			Map<Object, Object> meta = new LinkedHashMap<Object, Object>();
 			ri.put("post_url", ar.getDestinationUrl(false));
