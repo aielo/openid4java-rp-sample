@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="author" content="Ricardo Aielo">
-		<title>Auth Return Information - OpenID RP Sample</title>
+		<title>Auth Response Information - OpenID RP Sample</title>
 	</head>
 	<body>
 		<c:if test="${not empty error}">

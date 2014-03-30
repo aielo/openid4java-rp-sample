@@ -66,7 +66,6 @@ public class OpenIDReturnServlet extends HttpServlet {
 
 			// reseting session
 			req.getSession().removeAttribute("openid4java-rp-sample.discovery");
-			req.getSession().removeAttribute("openid4java-rp-sample.request");
 
 		} catch (Throwable t) {
 			// view error

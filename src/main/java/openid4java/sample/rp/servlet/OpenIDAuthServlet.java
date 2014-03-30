@@ -61,7 +61,6 @@ public class OpenIDAuthServlet extends HttpServlet {
 
 			// storing session
 			req.getSession().setAttribute("openid4java-rp-sample.discovery", di);
-			req.getSession().setAttribute("openid4java-rp-sample.request", ri);
 
 		} catch (Throwable t) {
 			// view error
