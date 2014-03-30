@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	<head>
-		<meta charset="utf-8">
-		<meta name="author" content="Ricardo Aielo">
-		<title>Auth Response Information - OpenID RP Sample</title>
-	</head>
-	<body>
+<c:import url="/WEB-INF/includes/head.jsp">
+	<c:param name="title" value="Auth Request"/>
+</c:import>
+<body>
+	<c:import url="/WEB-INF/includes/header.jsp" />
+	<div class="container" role="main">
 		<c:if test="${not empty error}">
 			<h1>Error</h1>
 			<c:out value="${error}" />
@@ -33,5 +33,7 @@
 				<br />
 			</c:forEach>
 		</c:if>
-	</body>
+	</div>
+	<c:import url="/WEB-INF/includes/footer.jsp" />
+</body>
 </html>
