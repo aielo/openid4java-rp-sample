@@ -2,7 +2,7 @@
 <html lang="en">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:import url="/WEB-INF/includes/head.jsp">
-	<c:param name="title" value="Auth Request"/>
+	<c:param name="title" value="Auth Response"/>
 </c:import>
 <body>
 	<c:import url="/WEB-INF/includes/header.jsp" />
