@@ -8,4 +8,5 @@
 	</div>
 </div>
 <script src="/openid4java-rp-sample/js/jquery-2.1.0.min.js"></script>
+<script src="/openid4java-rp-sample/js/jquery.validate.min.js"></script>
 <script src="/openid4java-rp-sample/js/bootstrap.min.js"></script>
