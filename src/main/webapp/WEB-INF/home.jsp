@@ -53,7 +53,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-xs-10 col-xs-offset-2">
-								<button id="btn-op-cancel" type="button" class="btn btn-default">Cancel</button>
+								<a id="btn-op-cancel" href="/openid4java-rp-sample/" class="btn btn-default">Cancel</a>
 								<button type="submit" class="btn btn-primary">Submit</button>
 							</div>
 						</div>

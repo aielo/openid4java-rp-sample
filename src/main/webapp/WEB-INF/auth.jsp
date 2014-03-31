@@ -11,14 +11,13 @@
 			<div class="page-header">
 				<h1>Authorization Request</h1>
 			</div>
+			<c:if test="${!empty error}">
+				<div class="alert alert-danger alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					<strong>Error:</strong> Unable to locate OpenID Provider
+				</div>
+			</c:if>
 			<c:if test="${empty error}">
-				<!-- 
-				<h3>Meta</h3>
-				<c:forEach var="m" items="${info.meta}">
-					<c:out value="${m.key}" />: <c:out value="${m.value}" />
-					<br />
-				</c:forEach>
-				-->
 				<div class="col-xs-12">
 					<div class="jumbotron">
 						<form id="form-oar-info" class="form-horizontal" action="#">
@@ -86,7 +85,7 @@
 								</c:forEach>
 								<div class="form-group">
 									<div class="col-xs-10 col-xs-offset-2">
-										<button id="btn-oar-post-cancel" type="button" class="btn btn-default">Cancel</button>
+										<a id="btn-oar-post-cancel" href="/openid4java-rp-sample/" class="btn btn-default">Cancel</a>
 										<button type="submit" class="btn btn-primary">Submit</button>
 									</div>
 								</div>
@@ -100,7 +99,7 @@
 					<div class="jumbotron">
 						<form id="form-oar-error" class="form-horizontal" action="#">
 							<fieldset>
-								<legend>Error</legend>
+								<legend>Error summary</legend>
 								<div class="form-group">
 									<div class="col-xs-12">
 										<c:out value="${error}" />
