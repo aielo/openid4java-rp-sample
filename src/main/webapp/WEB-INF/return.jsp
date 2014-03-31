@@ -37,13 +37,13 @@
 							<div class="form-group">
 								<label class="col-xs-2 control-label">ID</label>
 								<div class="col-xs-10">
-									<input type="text" class="form-control" disabled value="<c:out value="${info.id}" />">
+									<input type="text" class="form-control" disabled value="<c:out value="${info.id ? info.id : 'unable to retrieve'}" />">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-xs-2 control-label">Verified</label>
 								<div class="col-xs-10">
-									<input type="text" class="form-control" disabled value="<c:out value="${info.verified}" />">
+									<input type="text" class="form-control" disabled value="<c:out value="${info.verified ? true : false}" />">
 								</div>
 							</div>
 							<c:forEach var="p" items="${info.return_parameters}" varStatus = "st">
