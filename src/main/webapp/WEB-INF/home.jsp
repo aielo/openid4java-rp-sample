@@ -76,7 +76,8 @@
 			$('#openid-provider form').validate({
 				rules: {
 					id: {
-						required: true
+						required: true,
+						url: true
 					},
 					action: {
 						required: true
