@@ -48,16 +48,11 @@ public class OpenIDAuthServlet extends HttpServlet {
 
 			// auth request
 			AuthRequest ar = cm.authenticate(di, req.getRequestURL().toString().replaceFirst("/auth", "/return"));
-			String ru = ar.getDestinationUrl(true);
 			Map<Object, Object> meta = new LinkedHashMap<Object, Object>();
-			ri.put("post_url", ar.getDestinationUrl(false));
-			ri.put("post_parameters", ar.getParameterMap());
-			ri.put("redirect_url", ru);
+			ri.put("path", ar.getDestinationUrl(false));
+			ri.put("parameters", ar.getParameterMap());
 			ri.put("meta", meta);
 			meta.put("openid_version", di.isVersion2() ? 2 : 1);
-			meta.put("post_support", di.isVersion2());
-			meta.put("post_required", ru.length() > 2048);
-			meta.put("redirect_size", ru.length());
 
 			// storing session
 			req.getSession().setAttribute("openid4java-rp-sample.discovery", di);

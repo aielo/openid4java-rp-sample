@@ -8,8 +8,8 @@
 	<c:import url="/WEB-INF/includes/header.jsp" />
 	<div class="container" role="main">
 		<div id="openid-auth-request" class="row">
-			<div class="page-header">
-				<h1>Authorization Request</h1>
+			<div class="page-header hidden">
+				<h1>OpenID Request</h1>
 			</div>
 			<c:if test="${!empty error}">
 				<div class="alert alert-danger alert-dismissable">
@@ -20,52 +20,16 @@
 			<c:if test="${empty error}">
 				<div class="col-xs-12">
 					<div class="jumbotron">
-						<form id="form-oar-info" class="form-horizontal" action="#">
+						<form id="form-oar" class="form-horizontal" action="/openid4java-rp-sample/auth" method="POST">
 							<fieldset>
-								<legend>OP Information</legend>
+								<legend>Make the OpenID Request</legend>
 								<div class="form-group">
-									<label class="col-xs-2 control-label">OpenID Version</label>
+									<label for="inputURL" class="col-xs-2 control-label">Path</label>
 									<div class="col-xs-10">
-										<input type="text" class="form-control" disabled value="${info.meta.openid_version}">
+										<input name="path" type="text" class="form-control" id="inputPath" value="${info.path}" />
 									</div>
 								</div>
-							</fieldset>
-						</form>
-					</div>
-				</div>
-				<div class="col-xs-6">
-					<div class="jumbotron">
-						<form id="form-oar-redirect" class="form-horizontal" action="/openid4java-rp-sample/auth" method="GET">
-							<fieldset>
-								<legend>Redirect <small>(URL redirect)</small></legend>
-								<div class="form-group">
-									<label for="textAreaRedirectURL" class="col-xs-2 control-label">URL</label>
-									<div class="col-xs-10">
-										<textarea id="textAreaRedirectURL" name="redirect_url" class="form-control" rows="10" style="resize: none;"><c:out value="${info.redirect_url}" /></textarea>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-xs-10 col-xs-offset-2">
-										<a id="btn-oar-redirect-cancel" href="/openid4java-rp-sample/" class="btn btn-default">Cancel</a>
-										<button type="submit" class="btn btn-primary">Redirect</button>
-									</div>
-								</div>
-							</fieldset>
-						</form>
-					</div>
-				</div>
-				<div class="col-xs-6">
-					<div class="jumbotron">
-						<form id="form-oar-post" class="form-horizontal" action="${info.post_url}" method="POST">
-							<fieldset>
-								<legend>Form submission <small>(POST)</small></legend>
-								<div class="form-group">
-									<label for="inputURL" class="col-xs-2 control-label">URL</label>
-									<div class="col-xs-10">
-										<input name="post_url" type="text" class="form-control" id="inputURL" value="${info.post_url}" />
-									</div>
-								</div>
-								<c:forEach var="p" items="${info.post_parameters}" varStatus = "st">
+								<c:forEach var="p" items="${info.parameters}" varStatus = "st">
 									<div class="form-group">
 										<c:if test="${st.first }">
 											<label for="inputParams" class="col-xs-2 control-label">Parameters</label>
@@ -84,9 +48,13 @@
 									</div>
 								</c:forEach>
 								<div class="form-group">
+									<div style="border-bottom: 1px solid #e5e5e5;"></div>
+								</div>
+								<div class="form-group">
 									<div class="col-xs-10 col-xs-offset-2">
-										<a id="btn-oar-post-cancel" href="/openid4java-rp-sample/" class="btn btn-default">Cancel</a>
-										<button type="submit" class="btn btn-primary">Submit</button>
+										<a id="btn-oar-request-cancel" href="/openid4java-rp-sample/" class="btn btn-default">Cancel</a>
+										<button id="btn-oar-request-submit" type="submit" class="btn btn-primary">Submit form</button>
+										<button id="btn-oar-request-redirect" type="submit" class="btn btn-primary">Redirect</button>
 									</div>
 								</div>
 							</fieldset>
@@ -106,6 +74,9 @@
 									</div>
 								</div>
 								<div class="form-group">
+									<div style="border-bottom: 1px solid #e5e5e5;"></div>
+								</div>
+								<div class="form-group">
 									<div class="col-xs-12">
 										<a id="btn-oar-error-back" href="/openid4java-rp-sample/" class="btn btn-primary">Back</a>
 									</div>
@@ -120,24 +91,20 @@
 	<c:import url="/WEB-INF/includes/footer.jsp" />
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$('#form-oar-redirect').submit(function(event) {
-				event.preventDefault();
-			}).validate({
-				rules: {
-					redirect_url: {
-						required: true,
-						url: true
-					}
-				},
-				submitHandler: function(form) {
-					window.location = $('#form-oar-redirect [name="redirect_url"]').val();
-				}
+			// GET selection
+			$('#btn-oar-request-redirect').on('click', function() {
+				$('#form-oar').attr('method', 'GET');
 			});
-			$('#form-oar-post').submit(function(event) {
+			// POST selection
+			$('#btn-oar-request-submit').on('click', function() {
+				$('#form-oar').attr('method', 'POST');
+			});
+			// Validation and submission/redirect
+			$('#form-oar').on('submit', function() {
 				event.preventDefault();
 			}).validate({
 				rules: {
-					post_url: {
+					path: {
 						required: true,
 						url: true
 					}
@@ -152,19 +119,33 @@
 					return true;
 				},
 				submitHandler: function(form) {
-					form.action = $('#form-oar-post [name="post_url"]').val();
-					$('#form-oar-post input').each(function () {
+					var method = $('#form-oar').attr('method');
+					form.action = $('#form-oar [name="path"]').val();
+					$('#form-oar input').each(function () {
 						// rename value fields and remove key fields
 						if ($(this).attr('name') && $(this).attr('name').indexOf('value_') == 0) {
 							var name = $(this).attr('name').substr(6);
-							$(this).attr('name', $('#form-oar-post input[name="key_' + name + '"]').val());
-							$('#form-oar-post input[name="key_' + name + '"]').removeAttr('name');
+							$(this).attr('name', $('#form-oar input[name="key_' + name + '"]').val());
+							// "removing fields" (keeping inputs avoid layout effects)
+							$('#form-oar input[name="key_' + name + '"]').removeAttr('name');
 						}
 					});
-					// change action to post URL
-					form.action = $('#form-oar-post [name="post_url"]').val();
-					$('#form-oar-post input[name="post_url"]').removeAttr('name');
-					form.submit();
+					// "remove" path parameter, it should not be submitted
+					$('#form-oar input[name="path"]').removeAttr('name');
+					if (method === 'POST') {
+						// POST form
+						form.submit();
+					} else {
+						// send redirect
+						var parameters = [];
+						$('#form-oar input').each(function () {
+							// ignore "removed" fields
+							if ($(this).attr('name')) {
+								parameters.push($(this).attr('name') + '=' + $(this).val());
+							}
+						});
+						window.location = form.action + '?' + parameters.join('&');
+					}
 				}
 			});
 		});

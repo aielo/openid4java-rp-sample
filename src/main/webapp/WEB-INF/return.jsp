@@ -8,8 +8,8 @@
 	<c:import url="/WEB-INF/includes/header.jsp" />
 	<div class="container" role="main">
 		<div id="openid-auth-response" class="row">
-			<div class="page-header">
-				<h1>Authorization Response</h1>
+			<div class="page-header hidden">
+				<h1>OpenID Response</h1>
 			</div>
 			<c:if test="${not empty error}">
 				<div class="alert alert-danger alert-dismissable">
@@ -35,7 +35,7 @@
 				<div class="jumbotron">
 					<form id="form-oar-summary" class="form-horizontal" action="#">
 						<fieldset>
-							<legend>Summary</legend>
+							<legend>Check the OpenID Response</legend>
 							<div class="form-group">
 								<label class="col-xs-2 control-label">ID</label>
 								<div class="col-xs-10">
@@ -67,8 +67,11 @@
 								</div>
 							</c:forEach>
 							<div class="form-group">
+								<div style="border-bottom: 1px solid #e5e5e5;"></div>
+							</div>
+							<div class="form-group">
 								<div class="col-xs-10 col-xs-offset-2">
-									<a id="btn-oar-back" href="/openid4java-rp-sample/" class="btn btn-default">Back</a>
+									<a id="btn-oar-back" href="/openid4java-rp-sample/" class="btn btn-primary">Home</a>
 								</div>
 							</div>
 						</fieldset>

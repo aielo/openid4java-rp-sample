@@ -15,13 +15,13 @@
 			</div>
 		</div>
 		<div id="openid-provider" class="row hidden">
-			<div class="page-header">
-				<h1>OpenID Provider <small>(OP)</small></h1>
+			<div class="page-header hidden">
+				<h1>OpenID Provider</h1>
 			</div>
 			<div class="jumbotron">
 				<form class="form-horizontal" action="/openid4java-rp-sample/auth" method="POST">
 					<fieldset>
-						<legend>Identification</legend>
+						<legend>Choose the OpenID Provider</legend>
 						<div class="form-group">
 							<label for="inputIdentifier" class="col-xs-2 control-label">Identifier</label>
 							<div class="col-xs-10">
@@ -29,7 +29,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-xs-2 control-label">Immediate action</label>
+							<label class="col-xs-2 control-label">Action</label>
 							<div class="col-xs-10">
 								<div class="radio">
 									<label>
@@ -54,7 +54,7 @@
 						<div class="form-group">
 							<div class="col-xs-10 col-xs-offset-2">
 								<a id="btn-op-cancel" href="/openid4java-rp-sample/" class="btn btn-default">Cancel</a>
-								<button type="submit" class="btn btn-primary">Submit</button>
+								<button type="submit" class="btn btn-primary">Next</button>
 							</div>
 						</div>
 					</fieldset>
