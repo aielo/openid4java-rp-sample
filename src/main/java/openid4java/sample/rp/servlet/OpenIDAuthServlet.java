@@ -37,11 +37,12 @@ public class OpenIDAuthServlet extends HttpServlet {
 		req.setAttribute("info", ri);
 
 		try {
-			// input validation
+			// input gathering and validation
 			String id = req.getParameter("id");
 			if (id == null || "".equals(id)){
 				throw new RuntimeException("OpenID Provider (OP) id is required");
 			}
+			String action = req.getParameter("action");
 
 			// discovery
 			DiscoveryInformation di = cm.associate(cm.discover(req.getParameter("id")));
@@ -53,10 +54,17 @@ public class OpenIDAuthServlet extends HttpServlet {
 			ri.put("parameters", ar.getParameterMap());
 			ri.put("meta", meta);
 			meta.put("openid_version", di.isVersion2() ? 2 : 1);
+			meta.put("auto_submit", false);
 
 			// storing session
 			req.getSession().setAttribute("openid4java-rp-sample.discovery", di);
 
+			if ("redirect".equals(action)) {
+				res.sendRedirect(ar.getDestinationUrl(true));
+				return;
+			} else if ("form".equals(action)) {
+				meta.put("auto_submit", true);
+			}
 		} catch (Throwable t) {
 			// view error
 			req.setAttribute("error", t.getMessage());

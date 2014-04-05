@@ -6,7 +6,7 @@
 </c:import>
 <body>
 	<c:import url="/WEB-INF/includes/header.jsp" />
-	<div class="container" role="main">
+	<div class="container hidden" role="main">
 		<div id="openid-auth-request" class="row">
 			<div class="page-header hidden">
 				<h1>OpenID Request</h1>
@@ -52,6 +52,7 @@
 								</div>
 								<div class="form-group">
 									<div class="col-xs-10 col-xs-offset-2">
+										<input name="auto_submit" type="hidden" value="${info.meta.auto_submit}" />
 										<a id="btn-oar-request-cancel" href="/openid4java-rp-sample/" class="btn btn-default">Cancel</a>
 										<button id="btn-oar-request-submit" type="submit" class="btn btn-primary">Submit form</button>
 										<button id="btn-oar-request-redirect" type="submit" class="btn btn-primary">Redirect</button>
@@ -130,8 +131,9 @@
 							$('#form-oar input[name="key_' + name + '"]').removeAttr('name');
 						}
 					});
-					// "remove" path parameter, it should not be submitted
+					// "remove" path and auto_submit parameters, it should not be submitted
 					$('#form-oar input[name="path"]').removeAttr('name');
+					$('#form-oar input[name="auto_submit"]').removeAttr('name');
 					if (method === 'POST') {
 						// POST form
 						form.submit();
@@ -148,6 +150,11 @@
 					}
 				}
 			});
+			if ($('#form-oar input[name="auto_submit"]').val() === 'true'){
+				$('#form-oar').submit();
+			} else {
+				$(".container").removeClass('hidden');
+			}
 		});
 	</script>
 </body>
