@@ -26,7 +26,7 @@
 								<div class="form-group">
 									<label class="col-xs-2 control-label">OpenID Version</label>
 									<div class="col-xs-10">
-										<input type="text" class="form-control" disabled value="<c:out value="${info.meta.openid_version}" />">
+										<input type="text" class="form-control" disabled value="${info.meta.openid_version}">
 									</div>
 								</div>
 							</fieldset>
@@ -62,7 +62,7 @@
 								<div class="form-group">
 									<label for="inputURL" class="col-xs-2 control-label">URL</label>
 									<div class="col-xs-10">
-										<input name="post_url" type="text" class="form-control" id="inputURL" value="<c:out value="${info.post_url}" />" />
+										<input name="post_url" type="text" class="form-control" id="inputURL" value="${info.post_url}" />
 									</div>
 								</div>
 								<c:forEach var="p" items="${info.post_parameters}" varStatus = "st">
@@ -70,16 +70,16 @@
 										<c:if test="${st.first }">
 											<label for="inputParams" class="col-xs-2 control-label">Parameters</label>
 											<div class="col-xs-5">
-												<input name="key_<c:out value="${p.key}" />" type="text" class="form-control" value="<c:out value="${p.key}" />" />
+												<input name="key_${p.key}" type="text" class="form-control" value="${p.key}" />
 											</div>
 										</c:if>
 										<c:if test="${!st.first }">
 											<div class="col-xs-5 col-xs-offset-2">
-												<input name="key_<c:out value="${p.key}" />" type="text" class="form-control" value="<c:out value="${p.key}" />"/>
+												<input name="key_${p.key}" type="text" class="form-control" value="${p.key}" />
 											</div>
 										</c:if>
 										<div class="col-xs-5">
-											<input name="value_<c:out value="${p.key}" />" type="text" class="form-control" value="<c:out value="${p.value}" />" />
+											<input name="value_${p.key}" type="text" class="form-control" value="${p.value}" />
 										</div>
 									</div>
 								</c:forEach>

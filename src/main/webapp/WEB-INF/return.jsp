@@ -11,24 +11,26 @@
 			<div class="page-header">
 				<h1>Authorization Response</h1>
 			</div>
-			<c:if test="${!empty error}">
+			<c:if test="${not empty error}">
 				<div class="alert alert-danger alert-dismissable">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 					<strong>Error:</strong> <c:out value="${error}" />
 				</div>
 			</c:if>
-			<c:if test="${!info.verified}">
-				<div class="alert alert-warning alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					<strong>Warning:</strong> OpenID identity verification failed!
-				</div>
-			</c:if>
-			<c:if test="${info.verified}">
-				<div class="alert alert-success alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					<strong>Success:</strong> OpenID identity verified!
-				</div>
-			</c:if>
+			<c:choose>
+				<c:when test="${(not empty info.verified) and info.verified}">
+					<div class="alert alert-success alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<strong>Success:</strong> OpenID identity verified!
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="alert alert-warning alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<strong>Warning:</strong> OpenID identity verification failed!
+					</div>
+				</c:otherwise>
+			</c:choose>
 			<div class="col-xs-12">
 				<div class="jumbotron">
 					<form id="form-oar-summary" class="form-horizontal" action="#">
@@ -37,13 +39,13 @@
 							<div class="form-group">
 								<label class="col-xs-2 control-label">ID</label>
 								<div class="col-xs-10">
-									<input type="text" class="form-control" disabled value="<c:out value="${info.id ? info.id : 'unable to retrieve'}" />">
+									<input type="text" class="form-control" disabled value="${not empty info.id ? info.id : 'unable to retrieve'}" />
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-xs-2 control-label">Verified</label>
 								<div class="col-xs-10">
-									<input type="text" class="form-control" disabled value="<c:out value="${info.verified ? true : false}" />">
+									<input type="text" class="form-control" disabled value="${(not empty info.verified) and info.verified ? true : false}" />
 								</div>
 							</div>
 							<c:forEach var="p" items="${info.return_parameters}" varStatus = "st">
@@ -51,16 +53,16 @@
 									<c:if test="${st.first }">
 										<label for="inputParams" class="col-xs-2 control-label">Parameters</label>
 										<div class="col-xs-5">
-											<input name="key_<c:out value="${p.key}" />" type="text" class="form-control" disabled value="<c:out value="${p.key}" />" />
+											<input name="key_<c:out value="${p.key}" />" type="text" class="form-control" disabled value="${p.key}" />
 										</div>
 									</c:if>
 									<c:if test="${!st.first }">
 										<div class="col-xs-5 col-xs-offset-2">
-											<input name="key_<c:out value="${p.key}" />" type="text" class="form-control" disabled value="<c:out value="${p.key}" />"/>
+											<input name="key_<c:out value="${p.key}" />" type="text" class="form-control" disabled value="${p.key}" />
 										</div>
 									</c:if>
 									<div class="col-xs-5">
-										<input name="value_<c:out value="${p.key}" />" type="text" class="form-control" disabled value="<c:out value="${p.value}" />" />
+										<input name="value_<c:out value="${p.key}" />" type="text" class="form-control" disabled value="${p.value}" />
 									</div>
 								</div>
 							</c:forEach>

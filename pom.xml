@@ -4,7 +4,7 @@
 
 	<groupId>openid4java-rp-sample</groupId>
 	<artifactId>openid4java-rp-sample</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<version>0.1</version>
 	<packaging>war</packaging>
 
 	<name>openid4java-rp-sample</name>
@@ -55,6 +55,13 @@
 					<source>1.6</source>
 					<target>1.6</target>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<configuration>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
+					</configuration>
 			</plugin>
 		</plugins>
 	</build>
